@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><title>Workless AI MVP</title></head>
+<body>
+<h1>Workless AI MVP</h1>
+
+<h2>Email IA</h2>
+<textarea id="emailInput" placeholder="Décris l'email"></textarea><br>
+<button onclick="sendEmail()">Rédiger Email</button>
+<p id="emailResult"></p>
+
+<h2>Résumé IA</h2>
+<textarea id="resumeInput" placeholder="Texte à résumer"></textarea><br>
+<button onclick="sendResume()">Résumer</button>
+<p id="resumeResult"></p>
+
+<h2>Gestion Tâches IA</h2>
+<textarea id="tasksInput" placeholder="Liste des tâches"></textarea><br>
+<button onclick="sendTasks()">Organiser</button>
+<p id="tasksResult"></p>
+
+<script>
+const backendURL = "https://workless-ai-backend.onrender.com"; // remplace par ton URL Render
+
+async function sendEmail(){
+    const formData = new FormData();
+    formData.append("prompt", document.getElementById("emailInput").value);
+    const res = await fetch(`${backendURL}/email`, {method:"POST", body:formData});
+    const data = await res.json();
+    document.getElementById("emailResult").innerText = data.email;
+}
+
+async function sendResume(){
+    const formData = new FormData();
+    formData.append("prompt", document.getElementById("resumeInput").value);
+    const res = await fetch(`${backendURL}/resume`, {method:"POST", body:formData});
+    const data = await res.json();
+    document.getElementById("resumeResult").innerText = data.resume;
+}
+
+async function sendTasks(){
+    const formData = new FormData();
+    formData.append("prompt", document.getElementById("tasksInput").value);
+    const res = await fetch(`${backendURL}/tasks`, {method:"POST", body:formData});
+    const data = await res.json();
+    document.getElementById("tasksResult").innerText = data.tasks;
+}
+</script>
+</body>
+</html>
